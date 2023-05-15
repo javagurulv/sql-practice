@@ -1,4 +1,11 @@
 
+CREATE SCHEMA IF NOT EXISTS sql_practice_lesson_4
+DEFAULT CHARACTER SET utf8 ;
+USE sql_practice_lesson_4;
+
+commit;
+
+
 -- SQL script for "readers" table creation
 CREATE TABLE readers (
     id BIGINT AUTO_INCREMENT,
@@ -21,7 +28,7 @@ CREATE TABLE books (
     page_count INT,
     PRIMARY KEY(id)
 );
---End of SQL script for "books" table creation
+-- End of SQL script for "books" table creation
 
 -- SQL script for "library_cards" table creation
 CREATE TABLE library_cards (
@@ -32,7 +39,7 @@ CREATE TABLE library_cards (
     PRIMARY KEY(id),
     FOREIGN KEY(reader_id) REFERENCES readers(id)
 );
---End of SQL script for "library_cards" table creation
+-- End of SQL script for "library_cards" table creation
 
 
 -- SQL script for "library_card_items" table creation
@@ -46,4 +53,4 @@ CREATE TABLE library_card_items (
     FOREIGN KEY(library_card_id) REFERENCES library_cards(id),
     FOREIGN KEY(book_id) REFERENCES books(id)
 );
---End of SQL script for "library_card_items" table creation
+-- End of SQL script for "library_card_items" table creation
