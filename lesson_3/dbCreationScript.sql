@@ -1,4 +1,11 @@
 
+CREATE SCHEMA IF NOT EXISTS sql_practice_lesson_3
+DEFAULT CHARACTER SET utf8 ;
+USE sql_practice_lesson_3;
+
+commit;
+
+
 -- SQL script for "readers" table creation
 CREATE TABLE readers (
     first_name VARCHAR(100),
@@ -10,6 +17,8 @@ CREATE TABLE readers (
 );
 -- End of SQL script for "readers" table creation
 
+commit;
+
 -- SQL script for "books" table creation
 CREATE TABLE books (
     title VARCHAR(1000),
@@ -17,4 +26,6 @@ CREATE TABLE books (
     year_of_issue INT,
     page_count INT
 );
---End of SQL script for "books" table creation
+-- End of SQL script for "books" table creation
+
+commit;
