@@ -95,3 +95,14 @@ GROUP BY books.id;
 
 -- End of Найти для каждой книги дату, когда ее брали на чтение в первый раз
 
+
+-- Найти для каждой книги дату, когда ее в последний раз возвращали в библиотеку
+
+SELECT books.*,
+	   MAX(library_card_items.return_date) AS lastReturnDate
+FROM library_card_items
+LEFT JOIN books
+ON library_card_items.book_id = books.id
+GROUP BY books.id;
+
+-- End of Найти для каждой книги дату, когда ее в последний раз возвращали в библиотеку
