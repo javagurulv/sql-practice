@@ -82,3 +82,16 @@ FROM books
 ORDER BY books.author DESC;
 
 -- End of Составьте список из авторов книг в порядке Я -> А (обратном алфавитному)
+
+
+-- Найти для каждой книги дату, когда ее брали на чтение в первый раз
+
+SELECT books.*,
+	   MIN(library_card_items.issue_date) firstIssueDate
+FROM library_card_items
+LEFT JOIN books
+ON library_card_items.book_id = books.id
+GROUP BY books.id;
+
+-- End of Найти для каждой книги дату, когда ее брали на чтение в первый раз
+
