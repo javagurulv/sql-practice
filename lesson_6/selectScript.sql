@@ -106,3 +106,13 @@ ON library_card_items.book_id = books.id
 GROUP BY books.id;
 
 -- End of Найти для каждой книги дату, когда ее в последний раз возвращали в библиотеку
+
+
+-- Найти одну книгу с наибольшим количеством страниц
+
+SELECT *
+FROM books
+ORDER BY books.page_count DESC
+LIMIT 1;
+
+-- ENd of Найти одну книгу с наибольшим количеством страниц
