@@ -38,4 +38,10 @@ VALUES(6, "Alexander", "Los Angeles", 49);
 INSERT INTO transactions(id, broker, city, amount)
 VALUES(7, "Alexander", "Toronto", 155);
 
+INSERT INTO transactions(id, broker, city, amount)
+VALUES(8, "John", "Toronto", 300);
+
+INSERT INTO transactions(id, broker, city, amount)
+VALUES(9, "Karl", "Los Angeles", 500);
+
 commit;
