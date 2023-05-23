@@ -49,7 +49,7 @@ INSERT INTO movies(id, title, director, year_of_issue, length_minutes)
 VALUES(10, "Up", "Pete Docter", 2009, 101);
 
 INSERT INTO movies(id, title, director, year_of_issue, length_minutes)
-VALUES(11, "Toy Story 3", "Lee Unkrich", 2010, 103);
+VALUES(11, "Toy Story 8", "El Directore", 2010, 103);
 
 INSERT INTO movies(id, title, director, year_of_issue, length_minutes)
 VALUES(12, "Cars 2", "John Lasseter", 2011, 120);
