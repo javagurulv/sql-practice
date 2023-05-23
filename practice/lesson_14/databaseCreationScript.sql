@@ -25,7 +25,7 @@ INSERT INTO movies(id, title, director, year_of_issue, length_minutes)
 VALUES(2, "A Bug's Life", "El Directore", 1998, 95);
 
 INSERT INTO movies(id, title, director, year_of_issue, length_minutes)
-VALUES(3, "Toy Story 2", "John Lasseter", 1999, 93);
+VALUES(3, "Toy Story 2", "John Lasseter", 2999, 93);
 
 INSERT INTO movies(id, title, director, year_of_issue, length_minutes)
 VALUES(4, "Monsters, Inc.", "Pete Docter", 2001, 92);
