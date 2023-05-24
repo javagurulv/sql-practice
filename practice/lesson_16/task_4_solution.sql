@@ -15,7 +15,7 @@ CREATE TABLE readers (
 );
 
 
-CREATE TABLE library_card (
+CREATE TABLE library_cards (
     id BIGINT AUTO_INCREMENT,
     reader_id BIGINT NOT NULL,
     book_id BIGINT NOT NULL,
