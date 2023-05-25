@@ -123,7 +123,7 @@ INSERT INTO client_addresses(id, client_id, country, city, address, post_code)
 VALUES(3, 3, "LATVIA", "Ventspils", "Berzas 12", "LV-9077");
 
 INSERT INTO client_addresses(id, client_id, country, city, address, post_code)
-VALUES(4, 4, "LATVIA", "Bauska", "Brivibas 77", "LV-4099");
+VALUES(4, 4, "LATVIA", "Riga", "Brivibas 77", "LV-4099");
 
 commit;
 
