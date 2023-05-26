@@ -1,90 +1,104 @@
-Какие книги в наличии (доступны для заимствования)?
-SELECT BookID, Title FROM Books
-WHERE BookID NOT IN (SELECT BookID FROM BookTransactions WHERE ReturnDate IS NULL);
+Какие книги имеют больше всего страниц?
+SELECT title, pages FROM books
+ORDER BY pages DESC
+LIMIT 5;
 
 
-Кто автор книги с определенным ID?
-SELECT Authors.Name FROM Books
-JOIN Authors ON Books.AuthorID = Authors.AuthorID
-WHERE Books.BookID = 2;
+Какие книги написал определенный автор ("Leo Tolstoy")?
+SELECT title FROM books
+JOIN authors ON books.authorID = authors.authorID
+WHERE authors.firstName = "Leo" AND authors.lastName = "Tolstoy";
 
 
-Какие книги написал определенный автор?
-SELECT Title FROM Books
-WHERE AuthorID = 1;
-
+Кто автор книги с определенным "Three Sisters"?
+SELECT authors.firstName, authors.lastName
+FROM books
+JOIN authors ON books.authorID = authors.authorID
+WHERE books.title = "Three Sisters";
 
 
 Какое количество книг каждого жанра есть в библиотеке?
-SELECT Genre, COUNT(*) FROM Books
-GROUP BY Genre;
+SELECT genre, COUNT(*) FROM books
+GROUP BY genre;
 
 
-Какие книги взял определенный пользователь?
-SELECT Books.Title FROM BookTransactions
-JOIN Books ON BookTransactions.BookID = Books.BookID
-WHERE UserID = 3;
+
+Какие книги брал пользователь "User", "Three"?
+SELECT books.title FROM bookTransactions
+JOIN books ON bookTransactions.bookID = books.bookID
+JOIN users ON bookTransactions.userID = users.userID
+WHERE users.firstName = "User" AND users.lastName = "Three";
 
 
 
 Какие книги в данный момент на руках у пользователей (не возвращены)?
-SELECT Books.Title, Users.Name FROM BookTransactions
-JOIN Books ON BookTransactions.BookID = Books.BookID
-JOIN Users ON BookTransactions.UserID = Users.UserID
-WHERE ReturnDate IS NULL;
+SELECT books.title, users.firstName, users.lastName
+FROM bookTransactions
+JOIN books ON bookTransactions.bookID = books.bookID
+JOIN users ON bookTransactions.userID = users.userID
+WHERE returnDate IS NULL;
+
 
 
 Какое количество книг взял каждый пользователь за всё время?
-SELECT Users.Name, COUNT(BookTransactions.BookID) FROM Users
-JOIN BookTransactions ON Users.UserID = BookTransactions.UserID
-GROUP BY Users.UserID;
+SELECT users.firstName,
+       users.lastName,
+       COUNT(bookTransactions.bookID) AS takenBookCount
+FROM users
+JOIN bookTransactions ON users.userID = bookTransactions.userID
+GROUP BY users.userID;
 
 
-Какие книги были возвращены после определенной даты?
-SELECT Books.Title FROM BookTransactions
-JOIN Books ON BookTransactions.BookID = Books.BookID
-WHERE ReturnDate > '2023-02-01';
+
+Какие книги были возвращены после определенной даты ('2023-02-01')?
+SELECT books.title FROM bookTransactions
+JOIN books ON bookTransactions.bookID = books.bookID
+WHERE returnDate > '2023-02-01';
 
 
-Какие книги были взяты в определенный год?
-SELECT Books.Title FROM BookTransactions
-JOIN Books ON BookTransactions.BookID = Books.BookID
-WHERE YEAR(BorrowDate) = 2023;
+
+Какие книги были взяты в определенный год (2023)?
+SELECT books.title FROM bookTransactions
+JOIN books ON bookTransactions.bookID = books.bookID
+WHERE YEAR(borrowDate) = 2023;
 
 
-Какие книги взяты, но ещё не возвращены?
-SELECT Books.Title FROM BookTransactions
-JOIN Books ON BookTransactions.BookID = Books.BookID
-WHERE ReturnDate IS NULL;
+
+Какова продолжительность чтения каждой книги в днях (для каждого раза когда книгу брали на чтение)?
+SELECT users.firstName, users.lastName,
+	   books.title,
+       DATEDIFF(bookTransactions.returnDate, bookTransactions.borrowDate) as ReadingTimeDays
+FROM bookTransactions
+JOIN users ON users.userID = bookTransactions.userID
+JOIN books ON books.bookID = bookTransactions.bookID
+WHERE bookTransactions.returnDate IS NOT NULL;
 
 
 Какова средняя продолжительность чтения книги для каждого пользователя?
-SELECT Users.Name, AVG(DATEDIFF(BookTransactions.ReturnDate, BookTransactions.BorrowDate)) as AverageReadingTime
-FROM Users
-JOIN BookTransactions ON Users.UserID = BookTransactions.UserID
-WHERE BookTransactions.ReturnDate IS NOT NULL
-GROUP BY Users.UserID;
+SELECT users.firstName, users.lastName,
+       AVG(DATEDIFF(bookTransactions.returnDate, bookTransactions.borrowDate)) as AverageReadingTimeDays
+FROM users
+JOIN bookTransactions ON users.userID = bookTransactions.userID
+WHERE bookTransactions.returnDate IS NOT NULL
+GROUP BY users.userID;
 
 
-Какие книги были написаны в определенный год?
-SELECT Title FROM Books
-WHERE YEAR(PublishDate) = 2005;
+Какие книги были написаны в определенный год (2005)?
+SELECT title FROM books
+WHERE publishedYear = 2005;
 
-
-
-Какие книги имеют больше всего страниц?
-SELECT Title FROM Books
-ORDER BY NumberOfPages DESC
-LIMIT 5;
 
 
 Кто автор с наибольшим количеством книг в библиотеке?
-SELECT Authors.Name FROM Authors
-JOIN Books ON Authors.AuthorID = Books.AuthorID
-GROUP BY Authors.AuthorID
-ORDER BY COUNT(Books.BookID) DESC
+SELECT authors.firstName, authors.lastName
+FROM authors
+JOIN books ON authors.authorID = books.authorID
+GROUP BY authors.authorID
+ORDER BY COUNT(books.bookID) DESC
 LIMIT 1;
 
+
+-----------------------------
 
 Какие книги были взяты, но еще не возвращены, и кто их взял?
 SELECT Users.Name, Books.Title FROM Users
@@ -348,3 +362,8 @@ GROUP BY Users.UserID
 ORDER BY DaysLate DESC
 LIMIT 1;
 
+
+
+Какие книги в наличии (доступны для чтения в библиотеке)?
+SELECT bookID, title FROM books
+WHERE bookID NOT IN (SELECT BookID FROM BookTransactions WHERE ReturnDate IS NULL);
