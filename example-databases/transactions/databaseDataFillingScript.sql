@@ -7,11 +7,11 @@ VALUES
     ('Michael Johnson', 'Paris'),
     ('Emily Brown', 'Tokyo'),
     ('David Wilson', 'Berlin'),
-    ('Sarah Davis', 'Sydney'),
+    ('Sarah Davis', 'London'),
     ('Daniel Anderson', 'Toronto'),
     ('Olivia Thomas', 'Moscow'),
     ('Matthew Lee', 'Madrid'),
-    ('Sophia Martinez', 'Rome');
+    ('Sophia Martinez', 'Madrid');
 
 
 -- Создание временной таблицы для генерации данных
@@ -28,7 +28,7 @@ INSERT INTO temp_transactions (trader_id, amount, transaction_year)
 SELECT
     (SELECT id FROM traders ORDER BY RAND() LIMIT 1) AS trader_id, -- Случайный выбор трейдера
     ROUND(RAND() * 1000, 2) AS amount, -- Генерация случайной суммы транзакции
-    FLOOR(RAND() * 10) + 2014 AS transaction_year -- Генерация случайного года транзакции от 2014 до 2023
+    FLOOR(RAND() * 10) + 2013 AS transaction_year -- Генерация случайного года транзакции от 2014 до 2023
 FROM
     (SELECT id FROM traders LIMIT 100) AS t; -- Ограничение до 100 записей
 
@@ -36,7 +36,7 @@ INSERT INTO temp_transactions (trader_id, amount, transaction_year)
 SELECT
     (SELECT id FROM traders ORDER BY RAND() LIMIT 1) AS trader_id, -- Случайный выбор трейдера
     ROUND(RAND() * 1000, 2) AS amount, -- Генерация случайной суммы транзакции
-    FLOOR(RAND() * 10) + 2015 AS transaction_year -- Генерация случайного года транзакции от 2014 до 2023
+    FLOOR(RAND() * 10) + 2013 AS transaction_year -- Генерация случайного года транзакции от 2013 до 2023
 FROM
     (SELECT id FROM traders LIMIT 100) AS t; -- Ограничение до 100 записей
 
@@ -44,7 +44,7 @@ INSERT INTO temp_transactions (trader_id, amount, transaction_year)
 SELECT
     (SELECT id FROM traders ORDER BY RAND() LIMIT 1) AS trader_id, -- Случайный выбор трейдера
     ROUND(RAND() * 1000, 2) AS amount, -- Генерация случайной суммы транзакции
-    FLOOR(RAND() * 10) + 2016 AS transaction_year -- Генерация случайного года транзакции от 2014 до 2023
+    FLOOR(RAND() * 10) + 2013 AS transaction_year -- Генерация случайного года транзакции от 2014 до 2023
 FROM
     (SELECT id FROM traders LIMIT 100) AS t; -- Ограничение до 100 записей
 
@@ -52,7 +52,7 @@ INSERT INTO temp_transactions (trader_id, amount, transaction_year)
 SELECT
     (SELECT id FROM traders ORDER BY RAND() LIMIT 1) AS trader_id, -- Случайный выбор трейдера
     ROUND(RAND() * 1000, 2) AS amount, -- Генерация случайной суммы транзакции
-    FLOOR(RAND() * 10) + 2017 AS transaction_year -- Генерация случайного года транзакции от 2014 до 2023
+    FLOOR(RAND() * 10) + 2013 AS transaction_year -- Генерация случайного года транзакции от 2014 до 2023
 FROM
     (SELECT id FROM traders LIMIT 100) AS t; -- Ограничение до 100 записей
 
