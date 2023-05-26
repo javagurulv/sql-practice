@@ -1,3 +1,11 @@
+Сколько всего книг в библиотеке?
+SELECT COUNT(*) FROM books;
+
+
+Сколько всего пользователей в библиотеке?
+SELECT COUNT(*) FROM users;
+
+
 Какие книги имеют больше всего страниц?
 SELECT title, pages FROM books
 ORDER BY pages DESC
@@ -21,6 +29,13 @@ WHERE books.title = "Three Sisters";
 SELECT genre, COUNT(*) FROM books
 GROUP BY genre;
 
+
+Какие авторы пишут в определенном жанре (например "Fantasy")?
+SELECT authors.firstName, authors.lastName
+FROM authors
+JOIN books ON authors.authorID = books.authorID
+WHERE books.genre = 'Fantasy'
+GROUP BY authors.authorID;
 
 
 Какие книги брал пользователь "User", "Three"?
@@ -98,125 +113,132 @@ ORDER BY COUNT(books.bookID) DESC
 LIMIT 1;
 
 
------------------------------
-
 Какие книги были взяты, но еще не возвращены, и кто их взял?
-SELECT Users.Name, Books.Title FROM Users
-JOIN BookTransactions ON Users.UserID = BookTransactions.UserID
-JOIN Books ON BookTransactions.BookID = Books.BookID
-WHERE BookTransactions.ReturnDate IS NULL;
+SELECT users.firstName,
+       users.lastName,
+       books.title
+FROM users
+JOIN bookTransactions ON users.userID = bookTransactions.userID
+JOIN books ON bookTransactions.bookID = books.bookID
+WHERE bookTransactions.returnDate IS NULL;
 
 
-Сколько всего книг в библиотеке?
-SELECT COUNT(*) FROM Books;
-
-
-Сколько всего пользователей в библиотеке?
-SELECT COUNT(*) FROM Users;
-
-
-Какие авторы пишут в определенном жанре?
-SELECT Authors.Name FROM Authors
-JOIN Books ON Authors.AuthorID = Books.AuthorID
-WHERE Books.Genre = 'Фантастика';
-
-
-Какая книга у данного пользователя на руках в данный момент?
-SELECT Books.Title FROM BookTransactions
-JOIN Books ON BookTransactions.BookID = Books.BookID
-WHERE BookTransactions.UserID = 2 AND BookTransactions.ReturnDate IS NULL;
+Какие книги у данного пользователя (c userID = 2) на руках в данный момент?
+SELECT books.title
+FROM bookTransactions
+JOIN books ON bookTransactions.bookID = books.bookID
+WHERE bookTransactions.userID = 2
+      AND bookTransactions.returnDate IS NULL;
 
 
 Сколько книг было взято каждым пользователем за последний месяц?
-SELECT Users.Name, COUNT(BookTransactions.BookID) FROM Users
-JOIN BookTransactions ON Users.UserID = BookTransactions.UserID
-WHERE BookTransactions.BorrowDate > DATE_SUB(CURRENT_DATE, INTERVAL 1 MONTH)
-GROUP BY Users.UserID;
+SELECT users.firstName,
+       users.lastName,
+       COUNT(bookTransactions.bookID)
+FROM users
+JOIN bookTransactions ON users.userID = bookTransactions.userID
+WHERE bookTransactions.borrowDate > DATE_SUB(CURRENT_DATE, INTERVAL 1 MONTH)
+GROUP BY users.userID;
 
 
 Какой пользователь взял больше всего книг?
-SELECT Users.Name, COUNT(BookTransactions.BookID) as BooksTaken
-FROM Users
-JOIN BookTransactions ON Users.UserID = BookTransactions.UserID
-GROUP BY Users.UserID
-ORDER BY BooksTaken DESC
+SELECT users.firstName,
+       users.lastName,
+       COUNT(bookTransactions.bookID) AS BooksTaken
+FROM users
+JOIN bookTransactions ON users.userID = bookTransactions.userID
+GROUP BY users.userID
+ORDER BY booksTaken DESC
 LIMIT 1;
 
 
 Какие книги возвращались позже всего?
-SELECT Books.Title
-FROM BookTransactions
-JOIN Books ON BookTransactions.BookID = Books.BookID
-WHERE DATEDIFF(BookTransactions.ReturnDate, BookTransactions.BorrowDate) > (SELECT AVG(DATEDIFF(ReturnDate, BorrowDate)) FROM BookTransactions WHERE ReturnDate IS NOT NULL);
+SELECT books.title
+FROM bookTransactions
+JOIN books ON bookTransactions.bookID = books.bookID
+WHERE DATEDIFF(bookTransactions.returnDate, bookTransactions.borrowDate) > (SELECT AVG(DATEDIFF(returnDate, borrowDate)) FROM bookTransactions WHERE returnDate IS NOT NULL);
 
 
 Сколько времени в среднем проходит между тем, как пользователь берет книгу и возвращает её?
-SELECT AVG(DATEDIFF(ReturnDate, BorrowDate)) AS AvgDays
-FROM BookTransactions
-WHERE ReturnDate IS NOT NULL;
+SELECT AVG(DATEDIFF(returnDate, borrowDate)) AS AvgDays
+FROM bookTransactions
+WHERE returnDate IS NOT NULL;
 
 
 Какие книги ещё никогда не брали?
-SELECT Title FROM Books
-WHERE BookID NOT IN (SELECT DISTINCT BookID FROM BookTransactions);
+SELECT title FROM books
+WHERE bookID NOT IN (SELECT DISTINCT bookID FROM bookTransactions);
 
 
 Какой самый популярный жанр среди пользователей?
-SELECT Books.Genre, COUNT(BookTransactions.BookID) as Popularity
-FROM BookTransactions
-JOIN Books ON BookTransactions.BookID = Books.BookID
-GROUP BY Books.Genre
+SELECT books.genre,
+       COUNT(bookTransactions.bookID) as Popularity
+FROM bookTransactions
+JOIN books ON bookTransactions.bookID = books.bookID
+GROUP BY books.genre
 ORDER BY Popularity DESC
 LIMIT 1;
 
 
-Какой автор имеет наибольшее количество заимствований его книг?
-SELECT Authors.Name, COUNT(BookTransactions.BookID) AS BorrowedBooksCount
-FROM Authors
-JOIN Books ON Authors.AuthorID = Books.AuthorID
-JOIN BookTransactions ON Books.BookID = BookTransactions.BookID
-GROUP BY Authors.AuthorID
-ORDER BY BorrowedBooksCount DESC
+Какой автор имеет наибольшее количество взятых на чтение его книг?
+SELECT authors.firstName,
+       authors.lastName,
+       COUNT(bookTransactions.bookID) AS BorrowedBooksCount
+FROM authors
+JOIN books ON authors.authorID = books.authorID
+JOIN bookTransactions ON books.bookID = bookTransactions.bookID
+GROUP BY authors.authorID
+ORDER BY borrowedBooksCount DESC
 LIMIT 1;
 
 
 Какая книга была взята последней?
-SELECT Books.Title
-FROM Books
-JOIN BookTransactions ON Books.BookID = BookTransactions.BookID
-ORDER BY BookTransactions.BorrowDate DESC
+SELECT books.title
+FROM books
+JOIN bookTransactions ON books.bookID = bookTransactions.bookID
+ORDER BY bookTransactions.borrowDate DESC
 LIMIT 1;
 
 
 Кто является самым активным пользователем за последний год?
-SELECT Users.Name, COUNT(BookTransactions.BookID) AS BorrowedBooksCount
-FROM Users
-JOIN BookTransactions ON Users.UserID = BookTransactions.UserID
-WHERE YEAR(BookTransactions.BorrowDate) = YEAR(CURRENT_DATE) - 1
-GROUP BY Users.UserID
+SELECT users.firstName,
+       users.lastName,
+       COUNT(bookTransactions.bookID) AS BorrowedBooksCount
+FROM bookTransactions
+JOIN users ON users.userID = bookTransactions.userID
+WHERE YEAR(bookTransactions.borrowDate) = 2023
+GROUP BY users.userID
 ORDER BY BorrowedBooksCount DESC
 LIMIT 1;
 
 
 Какая книга находилась в пользовании дольше всего?
-SELECT Books.Title, MAX(DATEDIFF(BookTransactions.ReturnDate, BookTransactions.BorrowDate)) AS DaysBorrowed
-FROM Books
-JOIN BookTransactions ON Books.BookID = BookTransactions.BookID
-WHERE BookTransactions.ReturnDate IS NOT NULL
-GROUP BY Books.BookID
+SELECT books.title,
+       MAX(DATEDIFF(bookTransactions.returnDate, bookTransactions.borrowDate)) AS DaysBorrowed
+FROM books
+JOIN bookTransactions ON books.bookID = bookTransactions.bookID
+WHERE bookTransactions.returnDate IS NOT NULL
+GROUP BY books.bookID
 ORDER BY DaysBorrowed DESC
 LIMIT 1;
 
 
 Какой автор имеет наибольшее количество книг, которые ещё не возвращены?
-SELECT Authors.Name, COUNT(BookTransactions.BookID) AS NotReturnedBooksCount
-FROM Authors
-JOIN Books ON Authors.AuthorID = Books.AuthorID
-JOIN BookTransactions ON Books.BookID = BookTransactions.BookID
-WHERE BookTransactions.ReturnDate IS NULL
-GROUP BY Authors.AuthorID
+SELECT authors.firstName,
+       authors.lastName,
+       COUNT(bookTransactions.bookID) AS NotReturnedBooksCount
+FROM authors
+JOIN books ON authors.authorID = books.authorID
+JOIN bookTransactions ON books.bookID = bookTransactions.bookID
+WHERE bookTransactions.returnDate IS NULL
+GROUP BY authors.authorID
 ORDER BY NotReturnedBooksCount DESC
 LIMIT 1;
+
+-----------------------------
+
+
+
 
 
 Сколько книг было взято в определенный день недели?
