@@ -6,7 +6,7 @@ SELECT COUNT(*) FROM books;
 SELECT COUNT(*) FROM users;
 
 
-3. Какие книги были написаны в определенный год (2005)?
+3. Какие книги были написаны в определенный год (например в 2005)?
 SELECT title FROM books
 WHERE publishedYear = 2005;
 
@@ -17,13 +17,13 @@ ORDER BY pages DESC
 LIMIT 5;
 
 
-5. Какие книги написал определенный автор ("Leo Tolstoy")?
+5. Какие книги написал определенный автор (например "Leo Tolstoy")?
 SELECT title FROM books
 JOIN authors ON books.authorID = authors.authorID
 WHERE authors.firstName = "Leo" AND authors.lastName = "Tolstoy";
 
 
-6. Кто автор книги с определенным названием ("Three Sisters")?
+6. Кто автор книги с определенным названием (например "Three Sisters")?
 SELECT authors.firstName, authors.lastName
 FROM books
 JOIN authors ON books.authorID = authors.authorID
@@ -69,13 +69,13 @@ JOIN bookTransactions ON users.userID = bookTransactions.userID
 GROUP BY users.userID;
 
 
-12. Какие книги были возвращены после определенной даты ('2023-02-01')?
+12. Какие книги были возвращены после определенной даты (например после '2023-02-01')?
 SELECT books.title FROM bookTransactions
 JOIN books ON bookTransactions.bookID = books.bookID
 WHERE returnDate > '2023-02-01';
 
 
-13. Какие книги были взяты в определенный год (2023)?
+13. Какие книги были взяты в определенный год (например в 2023)?
 SELECT books.title FROM bookTransactions
 JOIN books ON bookTransactions.bookID = books.bookID
 WHERE YEAR(borrowDate) = 2023;
