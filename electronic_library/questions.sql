@@ -1,36 +1,41 @@
-Сколько всего книг в библиотеке?
+1. Сколько всего книг в библиотеке?
 SELECT COUNT(*) FROM books;
 
 
-Сколько всего пользователей в библиотеке?
+2. Сколько всего пользователей в библиотеке?
 SELECT COUNT(*) FROM users;
 
 
-Какие книги имеют больше всего страниц?
+3. Какие книги были написаны в определенный год (2005)?
+SELECT title FROM books
+WHERE publishedYear = 2005;
+
+
+4. Какие книги имеют больше всего страниц?
 SELECT title, pages FROM books
 ORDER BY pages DESC
 LIMIT 5;
 
 
-Какие книги написал определенный автор ("Leo Tolstoy")?
+5. Какие книги написал определенный автор ("Leo Tolstoy")?
 SELECT title FROM books
 JOIN authors ON books.authorID = authors.authorID
 WHERE authors.firstName = "Leo" AND authors.lastName = "Tolstoy";
 
 
-Кто автор книги с определенным "Three Sisters"?
+6. Кто автор книги с определенным названием ("Three Sisters")?
 SELECT authors.firstName, authors.lastName
 FROM books
 JOIN authors ON books.authorID = authors.authorID
 WHERE books.title = "Three Sisters";
 
 
-Какое количество книг каждого жанра есть в библиотеке?
+7. Какое количество книг каждого жанра есть в библиотеке?
 SELECT genre, COUNT(*) FROM books
 GROUP BY genre;
 
 
-Какие авторы пишут в определенном жанре (например "Fantasy")?
+8. Какие авторы пишут в определенном жанре (например "Fantasy")?
 SELECT authors.firstName, authors.lastName
 FROM authors
 JOIN books ON authors.authorID = books.authorID
@@ -38,7 +43,7 @@ WHERE books.genre = 'Fantasy'
 GROUP BY authors.authorID;
 
 
-Какие книги брал пользователь "User", "Three"?
+9. Какие книги брал пользователь с именем "User" и фамилией "Three"?
 SELECT books.title FROM bookTransactions
 JOIN books ON bookTransactions.bookID = books.bookID
 JOIN users ON bookTransactions.userID = users.userID
@@ -46,7 +51,7 @@ WHERE users.firstName = "User" AND users.lastName = "Three";
 
 
 
-Какие книги в данный момент на руках у пользователей (не возвращены)?
+10. Какие книги в данный момент на руках у пользователей (не возвращены)?
 SELECT books.title, users.firstName, users.lastName
 FROM bookTransactions
 JOIN books ON bookTransactions.bookID = books.bookID
@@ -55,7 +60,7 @@ WHERE returnDate IS NULL;
 
 
 
-Какое количество книг взял каждый пользователь за всё время?
+11. Какое количество книг взял каждый пользователь за всё время?
 SELECT users.firstName,
        users.lastName,
        COUNT(bookTransactions.bookID) AS takenBookCount
@@ -64,22 +69,20 @@ JOIN bookTransactions ON users.userID = bookTransactions.userID
 GROUP BY users.userID;
 
 
-
-Какие книги были возвращены после определенной даты ('2023-02-01')?
+12. Какие книги были возвращены после определенной даты ('2023-02-01')?
 SELECT books.title FROM bookTransactions
 JOIN books ON bookTransactions.bookID = books.bookID
 WHERE returnDate > '2023-02-01';
 
 
-
-Какие книги были взяты в определенный год (2023)?
+13. Какие книги были взяты в определенный год (2023)?
 SELECT books.title FROM bookTransactions
 JOIN books ON bookTransactions.bookID = books.bookID
 WHERE YEAR(borrowDate) = 2023;
 
 
 
-Какова продолжительность чтения каждой книги в днях (для каждого раза когда книгу брали на чтение)?
+14. Какова продолжительность чтения каждой книги в днях (для каждого раза когда книгу брали на чтение)?
 SELECT users.firstName, users.lastName,
 	   books.title,
        DATEDIFF(bookTransactions.returnDate, bookTransactions.borrowDate) as ReadingTimeDays
@@ -89,7 +92,7 @@ JOIN books ON books.bookID = bookTransactions.bookID
 WHERE bookTransactions.returnDate IS NOT NULL;
 
 
-Какова средняя продолжительность чтения книги для каждого пользователя?
+15. Какова средняя продолжительность чтения книги для каждого пользователя?
 SELECT users.firstName, users.lastName,
        AVG(DATEDIFF(bookTransactions.returnDate, bookTransactions.borrowDate)) as AverageReadingTimeDays
 FROM users
@@ -98,13 +101,8 @@ WHERE bookTransactions.returnDate IS NOT NULL
 GROUP BY users.userID;
 
 
-Какие книги были написаны в определенный год (2005)?
-SELECT title FROM books
-WHERE publishedYear = 2005;
 
-
-
-Кто автор с наибольшим количеством книг в библиотеке?
+16. Кто автор с наибольшим количеством книг в библиотеке?
 SELECT authors.firstName, authors.lastName
 FROM authors
 JOIN books ON authors.authorID = books.authorID
@@ -113,7 +111,7 @@ ORDER BY COUNT(books.bookID) DESC
 LIMIT 1;
 
 
-Какие книги были взяты, но еще не возвращены, и кто их взял?
+17. Какие книги были взяты, но еще не возвращены, и кто их взял?
 SELECT users.firstName,
        users.lastName,
        books.title
@@ -123,7 +121,7 @@ JOIN books ON bookTransactions.bookID = books.bookID
 WHERE bookTransactions.returnDate IS NULL;
 
 
-Какие книги у данного пользователя (c userID = 2) на руках в данный момент?
+18. Какие книги у данного пользователя (c userID = 2) на руках в данный момент?
 SELECT books.title
 FROM bookTransactions
 JOIN books ON bookTransactions.bookID = books.bookID
@@ -131,7 +129,7 @@ WHERE bookTransactions.userID = 2
       AND bookTransactions.returnDate IS NULL;
 
 
-Сколько книг было взято каждым пользователем за последний месяц?
+19. Сколько книг было взято каждым пользователем за последний месяц?
 SELECT users.firstName,
        users.lastName,
        COUNT(bookTransactions.bookID)
@@ -141,7 +139,7 @@ WHERE bookTransactions.borrowDate > DATE_SUB(CURRENT_DATE, INTERVAL 1 MONTH)
 GROUP BY users.userID;
 
 
-Какой пользователь взял больше всего книг?
+20. Какой пользователь взял больше всего книг?
 SELECT users.firstName,
        users.lastName,
        COUNT(bookTransactions.bookID) AS BooksTaken
@@ -152,25 +150,25 @@ ORDER BY booksTaken DESC
 LIMIT 1;
 
 
-Какие книги возвращались позже всего?
+21. Какие книги возвращались позже всего?
 SELECT books.title
 FROM bookTransactions
 JOIN books ON bookTransactions.bookID = books.bookID
 WHERE DATEDIFF(bookTransactions.returnDate, bookTransactions.borrowDate) > (SELECT AVG(DATEDIFF(returnDate, borrowDate)) FROM bookTransactions WHERE returnDate IS NOT NULL);
 
 
-Сколько времени в среднем проходит между тем, как пользователь берет книгу и возвращает её?
+22. Сколько времени в среднем проходит между тем, как пользователь берет книгу и возвращает её?
 SELECT AVG(DATEDIFF(returnDate, borrowDate)) AS AvgDays
 FROM bookTransactions
 WHERE returnDate IS NOT NULL;
 
 
-Какие книги ещё никогда не брали?
+23. Какие книги ещё никогда не брали?
 SELECT title FROM books
 WHERE bookID NOT IN (SELECT DISTINCT bookID FROM bookTransactions);
 
 
-Какой самый популярный жанр среди пользователей?
+24. Какой самый популярный жанр среди пользователей?
 SELECT books.genre,
        COUNT(bookTransactions.bookID) as Popularity
 FROM bookTransactions
@@ -180,7 +178,7 @@ ORDER BY Popularity DESC
 LIMIT 1;
 
 
-Какой автор имеет наибольшее количество взятых на чтение его книг?
+25. Какой автор имеет наибольшее количество взятых на чтение его книг?
 SELECT authors.firstName,
        authors.lastName,
        COUNT(bookTransactions.bookID) AS BorrowedBooksCount
@@ -192,7 +190,7 @@ ORDER BY borrowedBooksCount DESC
 LIMIT 1;
 
 
-Какая книга была взята последней?
+26. Какая книга была взята последней?
 SELECT books.title
 FROM books
 JOIN bookTransactions ON books.bookID = bookTransactions.bookID
@@ -200,7 +198,7 @@ ORDER BY bookTransactions.borrowDate DESC
 LIMIT 1;
 
 
-Кто является самым активным пользователем за последний год?
+27. Кто является самым активным пользователем за последний год?
 SELECT users.firstName,
        users.lastName,
        COUNT(bookTransactions.bookID) AS BorrowedBooksCount
@@ -212,7 +210,7 @@ ORDER BY BorrowedBooksCount DESC
 LIMIT 1;
 
 
-Какая книга находилась в пользовании дольше всего?
+28. Какая книга находилась в пользовании дольше всего?
 SELECT books.title,
        MAX(DATEDIFF(bookTransactions.returnDate, bookTransactions.borrowDate)) AS DaysBorrowed
 FROM books
@@ -223,7 +221,7 @@ ORDER BY DaysBorrowed DESC
 LIMIT 1;
 
 
-Какой автор имеет наибольшее количество книг, которые ещё не возвращены?
+29. Какой автор имеет наибольшее количество книг, которые ещё не возвращены?
 SELECT authors.firstName,
        authors.lastName,
        COUNT(bookTransactions.bookID) AS NotReturnedBooksCount
@@ -236,13 +234,13 @@ ORDER BY NotReturnedBooksCount DESC
 LIMIT 1;
 
 
-Сколько книг было взято в определенный день недели?
+30. Сколько книг было взято в определенный день недели?
 SELECT COUNT(*) AS TotalBooks
 FROM bookTransactions
 WHERE DAYNAME(borrowDate) = "Wednesday";
 
 
-Какой самый редко встречающийся жанр в библиотеке?
+31. Какой самый редко встречающийся жанр в библиотеке?
 SELECT genre, COUNT(*) AS GenreCount
 FROM books
 GROUP BY genre
@@ -250,7 +248,7 @@ ORDER BY GenreCount ASC
 LIMIT 1;
 
 
-Какой пользователь взял наибольшее количество книг определенного автора?
+32. Какой пользователь взял наибольшее количество книг определенного автора?
 SELECT users.firstName,
 	   users.lastName,
        COUNT(*) AS BooksCount
@@ -264,7 +262,7 @@ ORDER BY BooksCount DESC
 LIMIT 1;
 
 
-Сколько страниц прочитал каждый пользователь в сумме?
+33. Сколько страниц прочитал каждый пользователь в сумме?
 SELECT users.firstName,
        users.lastName,
        SUM(books.pages) AS TotalPagesRead
@@ -275,7 +273,7 @@ WHERE bookTransactions.returnDate IS NOT NULL
 GROUP BY users.userID;
 
 
-Какая книга взята чаще всего?
+34. Какая книга взята чаще всего?
 SELECT books.title,
 	   COUNT(bookTransactions.bookID) AS TimesBorrowed
 FROM books
@@ -285,14 +283,14 @@ ORDER BY TimesBorrowed DESC
 LIMIT 1;
 
 
-Какие книги возвращены раньше срока (срок возврата 30 дней)?
+35. Какие книги возвращены раньше срока (срок возврата 30 дней)?
 SELECT books.title
 FROM books
 JOIN bookTransactions ON books.bookID = bookTransactions.bookID
 WHERE DATEDIFF(bookTransactions.returnDate, bookTransactions.borrowDate) < 30 AND bookTransactions.returnDate IS NOT NULL;
 
 
-Какой пользователь возвращает книги позже срока чаще всего (срок возврата 30 дней)?
+36. Какой пользователь возвращает книги позже срока чаще всего (срок возврата 30 дней)?
 SELECT users.firstName,
        users.lastName,
        COUNT(bookTransactions.bookID) AS LateReturns
@@ -305,13 +303,13 @@ ORDER BY LateReturns DESC
 LIMIT 1;
 
 
-Какое общее количество книг было взято за определенный период времени?
+37. Какое общее количество книг было взято за определенный период времени?
 SELECT COUNT(*) AS TotalBooks
 FROM bookTransactions
 WHERE borrowDate >= '2022-01-01' AND borrowDate <= '2024-12-31';
 
 
-Какой день недели является самым популярным для взятия книг?
+38. Какой день недели является самым популярным для взятия книг?
 SELECT DAYNAME(borrowDate) AS PopularDay,
        COUNT(*) AS TotalBorrowed
 FROM bookTransactions
@@ -321,14 +319,14 @@ LIMIT 7;
 
 
 
-Сколько книг определенного жанра взято в данный момент?
+39. Сколько книг определенного жанра взято в данный момент?
 SELECT COUNT(*) AS TotalBooks
 FROM books
 JOIN bookTransactions ON books.bookID = bookTransactions.bookID
 WHERE books.genre = "Fantasy" AND bookTransactions.returnDate IS NULL;
 
 
-Какой пользователь взял книги большего количества различных авторов?
+40. Какой пользователь взял книги большего количества различных авторов?
 SELECT users.firstName,
        users.lastName,
        COUNT(DISTINCT authors.authorID) AS UniqueAuthorsCount
@@ -341,7 +339,7 @@ ORDER BY UniqueAuthorsCount DESC
 LIMIT 1;
 
 
-Какова максимальная, минимальная и средняя продолжительность чтения книг?
+41. Какова максимальная, минимальная и средняя продолжительность чтения книг?
 SELECT MAX(DATEDIFF(returnDate, borrowDate)) AS MaxDays,
        MIN(DATEDIFF(returnDate, borrowDate)) AS MinDays,
        AVG(DATEDIFF(returnDate, borrowDate)) AS AvgDays
@@ -349,7 +347,7 @@ FROM bookTransactions
 WHERE returnDate IS NOT NULL;
 
 
-Какой жанр книг имеет наименьшее количество взятий на чтение?
+42. Какой жанр книг имеет наименьшее количество взятий на чтение?
 SELECT books.genre, COUNT(bookTransactions.bookID) AS borrowedCount
 FROM books
 JOIN bookTransactions ON books.bookID = bookTransactions.bookID
