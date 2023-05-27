@@ -1,0 +1,43 @@
+Команда CREATE TABLE используется для создания новой таблицы
+в базе данных.
+
+Она определяет структуру таблицы, указывая названия столбцов,
+их типы данных и возможные ограничения.
+
+Основной синтаксис команды CREATE TABLE выглядит следующим образом:
+
+CREATE TABLE table_name (
+    column1 datatype1 constraints,
+    column2 datatype2 constraints,
+    ...
+);
+
+Где:
+- `CREATE TABLE`: ключевые слова, указывающие на создание новой таблицы.
+- `table_name`: название таблицы, которую вы хотите создать.
+- `(column1 datatype1 constraints, column2 datatype2 constraints, ...)`: список столбцов, их типы данных и ограничения.
+
+
+Пример команды CREATE TABLE:
+
+CREATE TABLE customers (
+    customer_id INT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    email VARCHAR(100)
+);
+
+В этом примере мы создаем новую таблицу "customers" с четырьмя
+столбцами: "customer_id", "first_name", "last_name" и "email".
+Столбец "customer_id" определен как первичный ключ (PRIMARY KEY),
+а остальные столбцы имеют типы данных VARCHAR с указанными максимальными
+длинами.
+
+При создании таблицы с помощью команды CREATE TABLE вы можете указать
+различные ограничения, такие как PRIMARY KEY, FOREIGN KEY,
+NOT NULL, UNIQUE и другие, чтобы задать правила для значений в столбцах.
+
+Команда CREATE TABLE позволяет создавать новые таблицы в базе данных
+с определенной структурой и ограничениями. Она является одной из
+основных команд DDL (Data Definition Language) в SQL,
+которая используется для определения схемы базы данных.
