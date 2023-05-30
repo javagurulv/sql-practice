@@ -6,12 +6,12 @@
 для которых совпадение найдено в обеих таблицах.
 
 Основной синтаксис команды SELECT с оператором INNER JOIN выглядит следующим образом:
-
+```sql
 SELECT column1, column2, ...
 FROM table1
 INNER JOIN table2
 ON table1.column_name = table2.column_name;
-
+```
 Где:
 - `SELECT`: ключевое слово, указывающее на начало команды выборки данных.
 - `column1, column2, ...`: названия столбцов, которые вы хотите выбрать из объединенных таблиц.
@@ -21,12 +21,12 @@ ON table1.column_name = table2.column_name;
 
 
 Пример 1: SELECT с оператором INNER JOIN:
-
+```sql
 SELECT orders.order_id, customers.customer_name
 FROM orders
 INNER JOIN customers
 ON orders.customer_id = customers.customer_id;
-
+```
 В этом примере мы выбираем столбцы "order_id" из таблицы "orders"
 и "customer_name" из таблицы "customers" и объединяем их с помощью
 оператора INNER JOIN. Условие ON `orders.customer_id = customers.customer_id`
@@ -36,17 +36,20 @@ ON orders.customer_id = customers.customer_id;
 
 
 Пример 2: SELECT с несколькими INNER JOIN:
-
+```sql
 SELECT orders.order_id, customers.customer_name, products.product_name
 FROM orders
 INNER JOIN customers ON orders.customer_id = customers.customer_id
 INNER JOIN products ON orders.product_id = products.product_id;
-
+```
 В этом примере мы объединяем таблицы "orders", "customers" и "products"
 с помощью нескольких операторов INNER JOIN. Мы указываем условия
 объединения для каждой пары таблиц. Результат будет содержать
 идентификаторы заказов, имена клиентов и названия продуктов для
 соответствующих записей.
+
+
+Заключение
 
 Команда SELECT с оператором INNER JOIN позволяет объединять строки
 из нескольких таблиц на основе совпадающих значений в указанных столбцах.
