@@ -22,7 +22,6 @@ CREATE TABLE books (
     genre VARCHAR(50),
     publishedYear INT,
     pages INT,
-    availability BOOLEAN DEFAULT 1,
     FOREIGN KEY (authorID) REFERENCES authors(authorID)
 );
 
