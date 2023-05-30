@@ -9,7 +9,7 @@
 и соответствующие строки из левой таблицы.
 
 Основной синтаксис команды SELECT с операторами LEFT JOIN и RIGHT JOIN выглядит следующим образом:
-
+```sql
 SELECT column1, column2, ...
 FROM table1
 LEFT JOIN table2 ON table1.column_name = table2.column_name;
@@ -17,7 +17,7 @@ LEFT JOIN table2 ON table1.column_name = table2.column_name;
 SELECT column1, column2, ...
 FROM table1
 RIGHT JOIN table2 ON table1.column_name = table2.column_name;
-
+```
 Где:
 - `SELECT`: ключевое слово, указывающее на начало команды выборки данных.
 - `column1, column2, ...`: названия столбцов, которые вы хотите выбрать из объединенных таблиц.
@@ -27,12 +27,12 @@ RIGHT JOIN table2 ON table1.column_name = table2.column_name;
 
 
 Пример 1: SELECT с оператором LEFT JOIN:
-
+```sql
 SELECT customers.customer_name, orders.order_id
 FROM customers
 LEFT JOIN orders
 ON customers.customer_id = orders.customer_id;
-
+```
 В этом примере мы выбираем столбцы "customer_name" из таблицы
 "customers" и "order_id" из таблицы "orders" и объединяем их
 с помощью оператора LEFT JOIN. Условие ON
@@ -45,12 +45,12 @@ ON customers.customer_id = orders.customer_id;
 
 
 Пример 2: SELECT с оператором RIGHT JOIN:
-
+```sql
 SELECT customers.customer_name, orders.order_id
 FROM customers
 RIGHT JOIN orders
 ON customers.customer_id = orders.customer_id;
-
+```
 В этом примере мы выбираем столбцы "customer_name" из таблицы
 "customers" и "order_id" из таблицы "orders" и объединяем их
 с помощью оператора RIGHT JOIN. Условие ON
@@ -61,6 +61,8 @@ ON customers.customer_id = orders.customer_id;
 Все строки из правой таблицы (orders) будут включены в результат,
 даже если для них нет соответствующих записей в левой таблице (customers).
 
+
+Заключение
 
 Команда SELECT с операторами LEFT JOIN и RIGHT JOIN позволяет
 объединять строки из двух таблиц на основе совпадающих значений
