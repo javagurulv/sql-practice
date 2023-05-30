@@ -71,9 +71,9 @@ VALUES
 (44, 'Angels & Demons', 20, 'Thriller', 2000, 616, 1);
 
 
--- Заполняем таблицу пользователей
+-- Заполняем таблицу читателей
 -- Используются вымышленные имена и адреса электронной почты
-INSERT INTO users (userID, firstName, lastName, email, signUpDate)
+INSERT INTO readers (readerID, firstName, lastName, email, signUpDate)
 VALUES
 (1, 'User', 'One', 'user1@example.com', '2023-05-01'),
 (2, 'User', 'Two', 'user2@example.com', '2023-05-10'),
@@ -98,7 +98,7 @@ VALUES
 
 
 -- Заполняем таблицу транзакций
-INSERT INTO bookTransactions (transactionID, userID, bookID, borrowDate, returnDate)
+INSERT INTO bookTransactions (transactionID, readerID, bookID, borrowDate, returnDate)
 VALUES
 (1, 1, 1, '2023-01-02', '2023-01-10'),
 (2, 1, 2, '2023-02-10', '2023-02-20'),

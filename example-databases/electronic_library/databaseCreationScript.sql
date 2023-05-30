@@ -26,9 +26,9 @@ CREATE TABLE books (
     FOREIGN KEY (authorID) REFERENCES authors(authorID)
 );
 
--- Создаем таблицу пользователей
-CREATE TABLE users (
-    userID INT PRIMARY KEY,
+-- Создаем таблицу читателей
+CREATE TABLE readers (
+    readerID INT PRIMARY KEY,
     firstName VARCHAR(50),
     lastName VARCHAR(50),
     email VARCHAR(100),
@@ -38,11 +38,11 @@ CREATE TABLE users (
 -- Создаем таблицу для операций с книгами
 CREATE TABLE bookTransactions (
     transactionID INT PRIMARY KEY,
-    userID INT,
+    readerID INT,
     bookID INT,
     borrowDate DATE,
     returnDate DATE,
-    FOREIGN KEY (userID) REFERENCES users(userID),
+    FOREIGN KEY (readerID) REFERENCES readers(readerID),
     FOREIGN KEY (bookID) REFERENCES books(bookID)
 );
 
