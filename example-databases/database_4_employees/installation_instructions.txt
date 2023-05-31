@@ -25,3 +25,4 @@ select it and start using it.
 
 
 5. Database diagram can be found: employees-schema.png.
+https://dev.mysql.com/doc/employee/en/sakila-structure.html
