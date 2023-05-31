@@ -33,3 +33,74 @@ true или false.
 использованы при определении столбцов. В SQL существуют и
 другие типы данных, которые могут быть использованы в зависимости
 от конкретных потребностей и типа базы данных.
+
+Вот несколько примеров создания столбцов с разными типами данных в SQL:
+
+1. Целочисленный столбец:
+```sql
+   CREATE TABLE employees (
+     id INT,
+     name VARCHAR(50),
+     age INT,
+     salary DECIMAL(10, 2)
+   );
+```
+
+2. Строковый столбец переменной длины:
+```sql
+   CREATE TABLE products (
+     id INT,
+     name VARCHAR(100),
+     description VARCHAR(255)
+   );
+```
+
+3. Строковый столбец фиксированной длины:
+```sql
+   CREATE TABLE customers (
+     id INT,
+     name CHAR(50),
+     email CHAR(100)
+   );
+```
+
+4. Столбец с десятичным числом:
+```sql
+   CREATE TABLE orders (
+     id INT,
+     order_number VARCHAR(10),
+     total_amount DECIMAL(10, 2)
+   );
+```
+
+5. Столбец с датой:
+```sql
+   CREATE TABLE tasks (
+     id INT,
+     task_name VARCHAR(50),
+     due_date DATE
+   );
+```
+
+6. Столбец с временем:
+```sql
+   CREATE TABLE appointments (
+     id INT,
+     client_name VARCHAR(50),
+     appointment_time TIME
+   );
+```
+
+7. Столбец с логическим значением:
+```sql
+   CREATE TABLE flags (
+     id INT,
+     flag_name VARCHAR(50),
+     is_active BOOLEAN
+   );
+```
+
+Это всего лишь некоторые примеры создания столбцов с разными
+типами данных. Фактические типы данных и их размеры могут
+варьироваться в зависимости от конкретных требований вашего
+проекта и используемой СУБД (системы управления базами данных).
