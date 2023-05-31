@@ -50,5 +50,3 @@ CREATE TABLE orders (
 
 
 ```
-
-
