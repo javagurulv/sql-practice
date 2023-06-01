@@ -8,7 +8,7 @@
 5. SELECT WHERE LIKE
 6. SELECT ORDER BY
 7. SELECT DISTINCT, LIMIT
-8. Practice
+8. Business analysis basics, practice
 9. SELECT AS, IS NULL, IS NOT NULL
 10. SELECT GROUP BY, Aggregate functions
 11. SELECT INNER JOIN
