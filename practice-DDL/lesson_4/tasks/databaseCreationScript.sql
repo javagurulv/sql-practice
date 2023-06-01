@@ -1,6 +1,6 @@
 
 CREATE SCHEMA IF NOT EXISTS sql_practice_ddl_lesson_4
-DEFAULT CHARACTER SET utf8 ;
+DEFAULT CHARACTER SET utf8;
 
 USE sql_practice_ddl_lesson_4;
 

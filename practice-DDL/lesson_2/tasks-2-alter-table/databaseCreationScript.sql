@@ -1,7 +1,8 @@
 
-CREATE SCHEMA IF NOT EXISTS sql_practice_lesson_18
-DEFAULT CHARACTER SET utf8 ;
-USE sql_practice_lesson_18;
+CREATE SCHEMA IF NOT EXISTS sql_practice_ddl_lesson_2_2
+DEFAULT CHARACTER SET utf8;
+
+USE sql_practice_ddl_lesson_2_2;
 
 commit;
 
