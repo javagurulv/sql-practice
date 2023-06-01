@@ -6,10 +6,10 @@
 дублирующихся значений.
 
 Основной синтаксис команды CREATE UNIQUE INDEX выглядит следующим образом:
-
+```sql
 CREATE UNIQUE INDEX index_name
 ON table_name (column1, column2, ...);
-
+```
 Где:
 - `CREATE UNIQUE INDEX`: ключевые слова, указывающие на создание уникального индекса.
 - `index_name`: название уникального индекса, которое вы хотите задать.
@@ -18,10 +18,10 @@ ON table_name (column1, column2, ...);
 
 
 Пример команды CREATE UNIQUE INDEX:
-
+```sql
 CREATE UNIQUE INDEX idx_customers_email
 ON customers (email);
-
+```
 В этом примере мы создаем уникальный индекс с названием
 "idx_customers_email" на столбце "email" таблицы "customers".
 Уникальный индекс гарантирует, что каждое значение в столбце

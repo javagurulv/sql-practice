@@ -5,10 +5,10 @@
 позволяя быстрее находить и извлекать данные из таблицы.
 
 Основной синтаксис команды CREATE INDEX выглядит следующим образом:
-
+```sql
 CREATE INDEX index_name
 ON table_name (column1, column2, ...);
-
+```
 Где:
 - `CREATE INDEX`: ключевые слова, указывающие на создание индекса.
 - `index_name`: название индекса, которое вы хотите задать.
@@ -17,10 +17,10 @@ ON table_name (column1, column2, ...);
 
 
 Пример команды CREATE INDEX:
-
+```sql
 CREATE INDEX idx_customers_last_name
 ON customers (last_name);
-
+```
 В этом примере мы создаем индекс с названием "idx_customers_last_name"
 на столбце "last_name" таблицы "customers". Индекс будет использоваться
 для ускорения поиска и сортировки данных по этому столбцу.
