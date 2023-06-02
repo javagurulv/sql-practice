@@ -1,0 +1,1 @@
+-- Task solution (SQL code) goes here
