@@ -1,0 +1,16 @@
+Напишите миграционный скрипт с SQL командами,
+который создаёт базу данных с нуля.
+
+Данный скрипт должен включать в себя следующие команды:
+- CREATE DATABASE;
+- CREATE TABLE (+ PRIMARY KEY, FOREIGN KEY, NOT NULL);
+- ALTER TABLE ADD COLUMN;
+- CREATE INDEX;
+- CREATE VIEW;
+- CREATE ROLE;
+- CREATE USER;
+- GRANT;
+
+В базе данных должно быть не менее 3 таблиц связанных между собой.
+
+Предметную область для базы данных придумайте самостоятельно.
