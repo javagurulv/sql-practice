@@ -1,5 +1,5 @@
 Ниже приведены темы, которые были включены
-в проекты по SQL DML (Data Manipulation Language):
+в курс по SQL DML (Data Manipulation Language):
 
 1. Simple SELECT
 2. SELECT WHERE
